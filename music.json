@@ -1,0 +1,32 @@
+[
+  {
+      "id": 1,
+      "title": "Stronger Than Ever",
+      "artist": "Kanye East",
+      "album": "My Terrible Bright Fantasy",
+      "type": "Album",
+      "format": "FLAC",
+      "coverPath": "test1.jpg",
+      "filePath": "test.flac"
+  },
+  {
+      "id": 2,
+      "title": "In The Virtual End",
+      "artist": "Digital Park",
+      "album": "Hybrid Programming",
+      "type": "Single",
+      "format": "MP3",
+      "coverPath": "test2.jpg",
+      "filePath": "test.mp3"
+  },
+  {
+      "id": 3,
+      "title": "Smell Like Code Spirit",
+      "artist": "Compiler",
+      "album": "In RAM",
+      "type": "EP",
+      "format": "FLAC",
+      "coverPath": "test3.jpg",
+      "filePath": "test2.flac"
+  }
+]
