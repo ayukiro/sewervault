@@ -5,6 +5,7 @@ A simple music download website created as an experiment using Claude 3.7
 
 [![Preview](preview.png "Preview")](preview.png)
 
+[Or you can check it out here](https://ayukiro.github.io/sewervault/)
 ## JSON Structure
 
 Site uses .json as database for tracks
