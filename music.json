@@ -6,6 +6,7 @@
       "album": "My Terrible Bright Fantasy",
       "type": "Album",
       "format": "FLAC",
+      "releaseDate": "2013-01-01",
       "coverPath": "test1.jpg",
       "filePath": "test.flac"
   },
@@ -16,6 +17,7 @@
       "album": "Hybrid Programming",
       "type": "Single",
       "format": "MP3",
+      "releaseDate": "2019-01-01",
       "coverPath": "test2.jpg",
       "filePath": "test.mp3"
   },
@@ -26,6 +28,7 @@
       "album": "In RAM",
       "type": "EP",
       "format": "FLAC",
+      "releaseDate": "2018-01-01",
       "coverPath": "test3.jpg",
       "filePath": "test2.flac"
   }
