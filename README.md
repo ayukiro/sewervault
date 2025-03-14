@@ -1,6 +1,6 @@
 # Sewervault
 
-A simple music download website created as an experiment using Claude 3.7
+A simple music website created as an experiment using Claude 3.7
 
 
 [![Preview](preview.png "Preview")](preview.png)
