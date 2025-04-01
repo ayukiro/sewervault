@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function() {
     // Audio player elements
     const audioPlayer = document.getElementById('audioPlayer');

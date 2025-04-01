@@ -1,7 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
     <link rel="icon" href="icon.jpg" type="image/jpg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -525,6 +526,7 @@
             transform: translate(-50%, -50%) scale(1);
         }
 
+        /* Modified download button */
         .download-btn {
             width: 36px;
             height: 36px;
@@ -539,7 +541,118 @@
             height: 20px;
         }
 
+        .contact-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background-color: rgba(255, 255, 255, 0.05);
+        color: var(--text-secondary);
+        border-radius: 8px;
+        padding: 0.5rem 1rem;
+        margin-left: auto;
+        cursor: pointer;
+        transition: var(--hover-transition);
+        font-size: 0.9rem;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
 
+    .contact-btn:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: var(--text);
+    }
+
+    .contact-icon {
+        transition: var(--hover-transition);
+    }
+
+    .contact-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .contact-modal.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .modal-content {
+        background-color: var(--card-bg);
+        border-radius: 12px;
+        padding: 2rem;
+        max-width: 500px;
+        width: 90%;
+        position: relative;
+        transform: translateY(-20px);
+        transition: transform 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .contact-modal.active .modal-content {
+        transform: translateY(0);
+    }
+
+    .modal-close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: color 0.2s ease;
+    }
+
+    .modal-close:hover {
+        color: var(--text);
+    }
+
+    .modal-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--text);
+    }
+
+    .modal-text {
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        color: var(--text-secondary);
+    }
+
+    .telegram-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        background-color: var(--primary);
+        color: white;
+        text-decoration: none;
+        padding: 0.75rem 1.25rem;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: var(--hover-transition);
+    }
+
+    .telegram-btn:hover {
+        background-color: #3c11a7;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px #2d136f73;
+    }
+
+    .telegram-icon {
+        width: 20px;
+        height: 20px;
+    }
         @media (max-width: 768px) {
             .track-metadata {
                 display: none;
@@ -549,11 +662,11 @@
                 padding-right: 0.5rem;
             }
             
-            /* .download-btn {
+            /*.download-btn {
                 padding: 0.5rem 1rem;
-            } */
-
-                        .volume-container {
+            } */           
+            
+           .volume-container {
                 display: none;
             }
             
@@ -565,8 +678,16 @@
             .track-details {
                 max-width: 150px;
             }
+            .contact-btn span {
+            display: none;
+            }
+        
+        .contact-btn {
+            padding: 0.5rem;
+            }
         }
 
+        /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -584,19 +705,256 @@
         .track-item:nth-child(5) { animation-delay: 0.5s; }
         .track-item:nth-child(6) { animation-delay: 0.6s; }
         .track-item:nth-child(7) { animation-delay: 0.7s; }
+        
+        /* Format Selection Modal */
+        .format-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.75);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .format-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .format-modal-content {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .format-modal.active .format-modal-content {
+            transform: translateY(0);
+        }
+        
+        .format-modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            font-weight: 700;
+        }
+        
+        .format-modal-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .format-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .format-option {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .format-option:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .format-option.selected {
+            border: 1px solid var(--primary);
+            background-color: rgba(45, 19, 111, 0.2);
+        }
+        
+        .format-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: rgba(45, 19, 111, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .format-icon svg {
+            width: 24px;
+            height: 24px;
+            color: white;
+        }
+        
+        .format-details {
+            flex: 1;
+        }
+        
+        .format-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .format-description {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        
+        .format-badge {
+            font-size: 0.7rem;
+            padding: 0.1rem 0.5rem;
+            border-radius: 20px;
+            margin-left: 0.5rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+        
+        .badge-flac {
+            background-color: rgba(34, 197, 94, 0.2);
+            color: var(--flac-color);
+        }
+        
+        .badge-mp3 {
+            background-color: rgba(59, 130, 246, 0.2);
+            color: var(--mp3-color);
+        }
+        
+        .format-modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .format-cancel-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .format-cancel-btn:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .format-download-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .format-download-btn:hover {
+            background-color: #3c11a7;
+            transform: translateY(-2px);
+        }
+        
+        .format-download-btn:disabled {
+            background-color: rgba(45, 19, 111, 0.5);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .format-download-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+        
+        /* Processing animation */
+        .processing-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .processing-container.active {
+            display: flex;
+        }
+        
+        .processing-animation {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .processing-circle {
+            width: 100%;
+            height: 100%;
+            border: 4px solid rgba(45, 19, 111, 0.2);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .processing-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .processing-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="container site-header">
-            <div class="logo-container">
-                <a href="https://github.com/ayukiro/sewervault" target="_blank">
-                    <svg class="github-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
-                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                </a>
-                <a href="#" class="logo">ayukiro</a>
-            </div>
+          <div class="logo-container">
+              <a href="https://github.com/ayukiro/sewervault" target="_blank">
+                  <svg class="github-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  </svg>
+              </a>
+              <a href="#" class="logo">sewervault</a>
+          </div>
+          <div class="contact-btn" id="contactBtn">
+              <svg class="contact-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Contact</span>
+          </div>
         </div>
     </header>
     
@@ -624,8 +982,8 @@
             
             <div class="player-controls">
                 <button class="play-pause-btn" id="playPauseBtn">
-                    <svg class="control-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 3l14 9-14 9V3z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="playPauseIcon"/>
+                    <svg class="control-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                        <path d="M5 3l14 9-14 9V3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="playPauseIcon"/>
                     </svg>
                 </button>
             </div>
@@ -805,9 +1163,135 @@
                 // Focus the search input
                 document.getElementById('searchInput').focus();
             }
-        }); 
+        });
+
+        // contant button
+        const contactBtn = document.getElementById('contactBtn');
+        const body = document.body;
+        
+        contactBtn.addEventListener('click', function() {
+            let contactModal = document.getElementById('contactModal');
+            if (!contactModal) {
+                contactModal = document.createElement('div');
+                contactModal.id = 'contactModal';
+                contactModal.className = 'contact-modal';
+                contactModal.innerHTML = `
+                    <div class="modal-content">
+                        <button class="modal-close" id="modalClose">&times;</button>
+                        <h2 class="modal-title">About This Project</h2>
+                        <p class="modal-text">
+                            Placeholder text, I guess?
+                        </p>
+                        <p class="modal-text">
+                            You can put here your TG link or whatever
+                        </p>
+                        <a href="https://t.me/durov" class="telegram-btn" target="_blank">
+                              <svg class="telegram-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                                  <path d="M19.7717 4.93665L3.25167 11.4366C2.16667 11.8616 2.17501 12.4366 3.05834 12.7033L7.35834 14.0533L16.9417 7.73165C17.4083 7.43332 17.8333 7.59165 17.4833 7.91665L9.65001 14.965H9.64834L9.65001 14.9658L9.30667 19.3883C9.74167 19.3883 9.93334 19.1883 10.175 18.9533L12.275 16.915L16.625 20.0883C17.4417 20.5383 18.0333 20.3066 18.2333 19.39L21.1 6.22332C21.4 5.09832 20.6333 4.55499 19.7717 4.93665Z" fill="currentColor"/>
+                              </svg>
+                            Contact on Telegram
+                        </a>
+                    </div>
+                `;
+                body.appendChild(contactModal);
+                
+                document.getElementById('modalClose').addEventListener('click', function() {
+                    contactModal.classList.remove('active');
+                });
+                
+                contactModal.addEventListener('click', function(e) {
+                    if (e.target === contactModal) {
+                        contactModal.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Show modal
+            contactModal.classList.add('active');
+        });
     </script>
     <script src="player.js"></script>
+    <script src="format-handler.js"></script>
+    
+    <!-- Format Selection Modal -->
+    <div class="format-modal" id="formatModal">
+        <div class="format-modal-content">
+            <div class="format-selection-container" id="formatSelectionContainer">
+                <h2 class="format-modal-title">Choose Download Format</h2>
+                <p class="format-modal-subtitle">Select your preferred audio format:</p>
+                
+                <div class="format-options">
+                    <div class="format-option" data-format="flac">
+                        <div class="format-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17.5 20h.5a2 2 0 0 0 2-2V8.5L14 2H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h2.5"/>
+                                <path d="M14 2v6h6"/>
+                                <path d="M13 16h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3H9"/>
+                                <path d="M16 22v-6"/>
+                                <path d="M20 16v6"/>
+                            </svg>
+                        </div>
+                        <div class="format-details">
+                            <div class="format-name">FLAC <span class="format-badge badge-flac">Lossless</span></div>
+                            <div class="format-description">Original, highest quality audio format. Perfect for audiophiles and collectors.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="format-option" data-format="mp3-320">
+                        <div class="format-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17.5 20h.5a2 2 0 0 0 2-2V8.5L14 2H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h2.5"/>
+                                <path d="M14 2v6h6"/>
+                                <path d="M10 20v-6"/>
+                                <path d="M8 16h4"/>
+                                <path d="M13 20v-6h1a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-1z"/>
+                            </svg>
+                        </div>
+                        <div class="format-details">
+                            <div class="format-name">MP3 <span class="format-badge badge-mp3">320 kbps</span></div>
+                            <div class="format-description">High quality compression with smaller file size. Best for most devices and situations.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="format-option" data-format="mp3-192">
+                        <div class="format-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17.5 20h.5a2 2 0 0 0 2-2V8.5L14 2H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h2.5"/>
+                                <path d="M14 2v6h6"/>
+                                <path d="M10 20v-6"/>
+                                <path d="M8 16h4"/>
+                                <path d="M13 20v-6h1a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-1z"/>
+                            </svg>
+                        </div>
+                        <div class="format-details">
+                            <div class="format-name">MP3 <span class="format-badge badge-mp3">192 kbps</span></div>
+                            <div class="format-description">Balanced quality and file size. Good for mobile devices and saving storage space.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="format-modal-buttons">
+                    <button class="format-cancel-btn" id="formatCancelBtn">Cancel</button>
+                    <button class="format-download-btn" id="formatDownloadBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Download
+                    </button>
+                </div>
+            </div>
+            
+            <div class="processing-container" id="processingContainer">
+                <div class="processing-animation">
+                    <div class="processing-circle"></div>
+                </div>
+                <h3 class="processing-text">Processing...</h3>
+                <p class="processing-subtitle">Converting FLAC to MP3. This may take a moment.</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 
