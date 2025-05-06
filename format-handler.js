@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Variables to store current track info
     let currentTrackPath = '';
     let currentTrackTitle = '';
+    let currentAlbum = '';
+    let currentType = '';
     let selectedFormat = '';
     
     // Add event listeners to format options
@@ -70,22 +72,52 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     const title = trackItem.querySelector('.track-title').textContent;
                     
+                    // Get album and type information
+                    const albumElement = trackItem.querySelector('.album-name');
+                    const typeElement = trackItem.querySelector('.track-type');
+                    
+                    // Store album and type if they exist
+                    currentAlbum = albumElement ? albumElement.textContent : '';
+                    currentType = typeElement ? typeElement.textContent.trim() : '';
+                    
                     // Show format selection modal
-                    openFormatModal(cleanPath, title);
+                    openFormatModal(cleanPath, title, currentAlbum, currentType);
                 }
             }
         });
     }
     
     // Open format selection modal
-    function openFormatModal(filePath, title) {
+    function openFormatModal(filePath, title, album, type) {
         currentTrackPath = filePath;
         currentTrackTitle = title;
+        currentAlbum = album;
+        currentType = type;
         selectedFormat = '';
         
         // Reset state
         formatOptions.forEach(opt => opt.classList.remove('selected'));
         formatDownloadBtn.disabled = true;
+        
+        // Show download whole album option only for EP and Album types
+        const albumOptionElement = document.getElementById('download-album-option');
+        if (albumOptionElement) {
+            if (type === 'EP' || type === 'Album') {
+                albumOptionElement.style.display = 'flex';
+                // Update the text based on type
+                const albumTypeText = type === 'EP' ? 'EP' : 'Album';
+                const albumTitleElement = albumOptionElement.querySelector('.format-name');
+                if (albumTitleElement) {
+                    albumTitleElement.innerHTML = `Download Entire ${albumTypeText} <span class="format-badge badge-flac">ZIP</span>`;
+                }
+                const albumDescElement = albumOptionElement.querySelector('.format-description');
+                if (albumDescElement) {
+                    albumDescElement.textContent = `Download all tracks from "${album}" as a ZIP archive in the best available quality.`;
+                }
+            } else {
+                albumOptionElement.style.display = 'none';
+            }
+        }
         
         // Show selection container, hide processing
         formatSelectionContainer.style.display = 'block';
@@ -106,6 +138,21 @@ document.addEventListener('DOMContentLoaded', function() {
             // Direct download of the original FLAC file
             window.location.href = `./music/${currentTrackPath}`;
             closeFormatModal();
+        } else if (format === 'album-zip') {
+            // Download the album as a ZIP
+            
+            // Show processing animation
+            formatSelectionContainer.style.display = 'none';
+            processingContainer.classList.add('active');
+            
+            // Update processing text
+            const processingText = document.querySelector('.processing-text');
+            const processingSubtitle = document.querySelector('.processing-subtitle');
+            if (processingText) processingText.textContent = 'Creating Album Archive...';
+            if (processingSubtitle) processingSubtitle.textContent = 'Preparing ZIP file with all tracks from the album. This may take a moment.';
+            
+            // Call the album ZIP creation API
+            downloadAlbumZip(currentAlbum, currentType);
         } else {
             // Convert to MP3
             const bitrate = format === 'mp3-320' ? '320' : '192';
@@ -117,6 +164,43 @@ document.addEventListener('DOMContentLoaded', function() {
             // Call the conversion API
             convertAndDownload(currentTrackPath, bitrate);
         }
+    }
+    
+    // Download album as ZIP
+    function downloadAlbumZip(album, type) {
+        const url = `create_album_zip.php?album=${encodeURIComponent(album)}&type=${encodeURIComponent(type)}`;
+        
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    // ZIP creation succeeded, download the file
+                    const downloadPath = data.file;
+                    
+                    // Trigger download after a small delay
+                    setTimeout(() => {
+                        window.location.href = downloadPath;
+                        
+                        // Close modal after download starts
+                        setTimeout(() => {
+                            closeFormatModal();
+                        }, 1000);
+                    }, 500);
+                } else {
+                    // Show error
+                    alert(`Creating album ZIP failed: ${data.message}`);
+                    closeFormatModal();
+                }
+            })
+            .catch(error => {
+                alert('An error occurred while creating the album ZIP. Please try again.');
+                closeFormatModal();
+            });
     }
     
     // Convert FLAC to MP3 and download

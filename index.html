@@ -1185,7 +1185,7 @@
                         <p class="modal-text">
                             You can put here your TG link or whatever
                         </p>
-                        <a href="https://t.me/durov" class="telegram-btn" target="_blank">
+                        <a hre=https://t.me/durov" class="telegram-btn" target="_blank">
                               <svg class="telegram-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
                                   <path d="M19.7717 4.93665L3.25167 11.4366C2.16667 11.8616 2.17501 12.4366 3.05834 12.7033L7.35834 14.0533L16.9417 7.73165C17.4083 7.43332 17.8333 7.59165 17.4833 7.91665L9.65001 14.965H9.64834L9.65001 14.9658L9.30667 19.3883C9.74167 19.3883 9.93334 19.1883 10.175 18.9533L12.275 16.915L16.625 20.0883C17.4417 20.5383 18.0333 20.3066 18.2333 19.39L21.1 6.22332C21.4 5.09832 20.6333 4.55499 19.7717 4.93665Z" fill="currentColor"/>
                               </svg>
@@ -1234,6 +1234,20 @@
                         <div class="format-details">
                             <div class="format-name">FLAC <span class="format-badge badge-flac">Lossless</span></div>
                             <div class="format-description">Original, highest quality audio format. Perfect for audiophiles and collectors.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="format-option" id="download-album-option" data-format="album-zip" style="display:none;">
+                        <div class="format-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/>
+                                <path d="M12 10v6"/>
+                                <path d="m9 13 3 3 3-3"/>
+                            </svg>
+                        </div>
+                        <div class="format-details">
+                            <div class="format-name">Download Entire Album <span class="format-badge badge-flac">ZIP</span></div>
+                            <div class="format-description">Download all tracks from the album as a ZIP archive in the best available quality.</div>
                         </div>
                     </div>
                     
@@ -1288,7 +1302,7 @@
                     <div class="processing-circle"></div>
                 </div>
                 <h3 class="processing-text">Processing...</h3>
-                <p class="processing-subtitle">Converting FLAC to MP3. This may take a moment.</p>
+                <p class="processing-subtitle">Creating ZIP archive or converting FLAC to MP3. This may take a moment.</p>
             </div>
         </div>
     </div>
